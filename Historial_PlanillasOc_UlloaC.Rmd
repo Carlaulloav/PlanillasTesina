@@ -1,0 +1,55 @@
+---
+title: "Planillas Tesina"
+output: html_notebook
+---
+
+```{r}
+library(camtrapR)
+library(secr)
+
+camtraps <- read.csv("Camtraps.csv", sep = ";", header = T)
+records <- read.csv("AllPicturesEDITADO.csv", sep = ";", header = T)
+```
+cAMTRAP pide columna con la fecha original, juntar la columna date y time 
+
+```{r}
+# create DateTimeOrginal column in proper format
+records$DateTimeOriginal <- strptime(paste(as.Date(records$Date, format = "%d-%m-%Y"), 
+                                           records$Time), format = "%Y-%m-%d %H:%M:%S")
+
+```
+
+Datos de operación de las CT, otro requisito del paquete, crea una matriz con los dias que funcionaron las CT, lo pide para hacer el historial.Cuando agregue las camaras con problemas poner TRUE en hasProblem.
+
+```{r}
+cam_operation <- cameraOperation(CTtable      = camtraps,
+                                 stationCol   = "Camera",
+                                 setupCol     = "Setup_date",
+                                 retrievalCol = "Retrieval_date",
+                                 writecsv     = FALSE,
+                                 hasProblems  = FALSE,
+                                 dateFormat   = "%d-%m-%Y")
+```
+
+Hacer el historial 
+Donde están los registros, CamOp, se creó en el chunk anterior, cambiar los nombre, pide la columan es especies, ocassion de muestreo= 5, 6 en 5 días, el día 1 es desde cuando comenzo a funcionar, el día que comenzó a funcionar, esfuerzo es falso, no es relevante, Minblaba: cuantos dias debe haber funcionado la camara igual que el de la ocación, write cvs, para tener el historia, zona horaria nose si es relevante para esto y finalmente cambiar 
+
+```{r}
+
+DetHistculpeo <- detectionHistory(recordTable     = records,
+                                  camOp                = cam_operation,
+                                  stationCol           = "Camera",
+                                  speciesCol           = "EsPecie",
+                                  recordDateTimeCol    = "DateTimeOriginal",
+                                  species              = "ZorroCulPeo",
+                                  occasionLength       = 5,
+                                  day1                 = "station",
+                                  includeEffort        = FALSE,
+                                  minActiveDaysPerOccasion = 5,
+                                  writecsv             = TRUE,
+                                  timeZone             = "Etc/GMT+3",
+                                  outDir               = "C:/Users/Carla/OneDrive/Escritorio/CTs_RNLP20202021_ParaRevision_UlloaC")
+
+```
+
+
