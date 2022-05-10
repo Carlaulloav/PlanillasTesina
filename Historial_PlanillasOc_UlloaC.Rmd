@@ -34,7 +34,8 @@ cam_operation <- cameraOperation(CTtable      = camtraps,
 
 En este Code Chunks se crea el historial donde están los registros, CamOp, se creó en el chunk anterior. Importante cambiar los nombre de las variables segun lo que haya puesto en los data.frame anteriores, pide la columa de especies, ocasion de muestreo = 5, 6 en 5 días, el día 1 es desde cuando comenzo a funcionar, esfuerzo es falso, no es relevante, minActiveDaysPerOccasion: cuantos dias debe haber funcionado la CT, siempre debe estar igual que el de la ocasión, write cvs: para tener el historial. Finalmente cambiar el sitio donde quiero guardar el archivo csv del historial.
 - Para ver el historial de otras especies, simplemente cambiar nombre en "species"
-- Errores que se tuvieron: Data.frame "records" y "camtraps", tenían escrito de forma distinta la palabra "Camera", luego se corrigió.
+# Errores que se tuvieron: 
+- Data.frame "records" y "camtraps", tenían escrito de forma distinta la palabra "Camera", luego se corrigió.
 - El nombre de las cámaras tenía P en mayúscula y minúscula, también se corrigió
 - También se habían rellenado filas con NA, por lo que se procedió a copiar la base del excel en otra hoja y se corrigió.
 
